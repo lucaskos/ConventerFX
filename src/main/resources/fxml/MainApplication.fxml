@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.FlowPane?>
 
-<FlowPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<FlowPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luke.controllers.MainController">
    <children>
-      <GridPane alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT">
+      <GridPane fx:id="gridpane" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -24,8 +24,8 @@
             <Label text="Fahrenheit" GridPane.columnIndex="1" />
             <Label text="Kelvin" GridPane.columnIndex="2" />
             <Label fx:id="celsiusLabel" GridPane.rowIndex="1" />
-            <Label GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Label GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <Label fx:id="fahrenheitLabel" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label fx:id="kelvinLabel" GridPane.columnIndex="2" GridPane.rowIndex="1" />
          </children>
          <FlowPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -34,9 +34,9 @@
             <Insets />
          </opaqueInsets>
       </GridPane>
-      <FlowPane alignment="BASELINE_LEFT" orientation="VERTICAL" prefWrapLength="0.0">
+      <FlowPane fx:id="flowpane" alignment="BASELINE_LEFT" orientation="VERTICAL" prefWrapLength="0.0">
          <children>
-            <Slider blockIncrement="1.0" majorTickUnit="10.0" minorTickCount="5" nodeOrientation="LEFT_TO_RIGHT" prefWidth="300.0" showTickLabels="true" showTickMarks="true">
+            <Slider fx:id="slider" blockIncrement="1.0" majorTickUnit="10.0" minorTickCount="5" nodeOrientation="LEFT_TO_RIGHT" prefWidth="300.0" showTickLabels="true" showTickMarks="true">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>
@@ -47,14 +47,17 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" />
                </padding>
             </Slider>
-            <VBox spacing="10.0">
+            <VBox fx:id="comboBoxElements" spacing="10.0">
                <children>
-                  <RadioButton mnemonicParsing="false" text="celsius">
+                  <RadioButton mnemonicParsing="false" onAction="#comboBoxSelected" selected="true" text="celsius">
                      <toggleGroup>
-                        <ToggleGroup fx:id="VBox" />
-                     </toggleGroup></RadioButton>
-                  <RadioButton mnemonicParsing="false" text="fahrenheit" />
-                  <RadioButton mnemonicParsing="false" text="kelvin" />
+                        <ToggleGroup fx:id="radioButtonGroup" />
+                     </toggleGroup>
+                  </RadioButton>
+               
+                        <RadioButton mnemonicParsing="false" onAction="#comboBoxSelected" text="fahrenheit" toggleGroup="$radioButtonGroup" />
+                  
+                        <RadioButton mnemonicParsing="false" onAction="#comboBoxSelected" text="kelvin" toggleGroup="$radioButtonGroup" />
                </children>
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
