@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.FlowPane?>
 
-
-<FlowPane alignment="TOP_CENTER" prefHeight="163.0" prefWidth="431.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+<FlowPane alignment="TOP_CENTER" prefHeight="163.0" prefWidth="431.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox alignment="CENTER" prefWidth="300.0" spacing="60.0">
          <children>
@@ -42,7 +41,10 @@
             </Slider>
             <VBox spacing="10.0">
                <children>
-                  <RadioButton mnemonicParsing="false" text="celsius" />
+                  <RadioButton mnemonicParsing="false" selected="true" text="celsius">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="VBox" />
+                     </toggleGroup></RadioButton>
                   <RadioButton mnemonicParsing="false" text="fahrenheit" />
                   <RadioButton mnemonicParsing="false" text="kelvin" />
                </children>
