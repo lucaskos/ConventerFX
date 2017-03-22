@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.FlowPane?>
+
+
+<FlowPane alignment="TOP_CENTER" prefHeight="163.0" prefWidth="431.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8">
+   <children>
+      <HBox alignment="CENTER" prefWidth="300.0" spacing="60.0">
+         <children>
+            <Label text="Celsius" />
+            <Label text="Fahrenheit" />
+            <Label text="Kelvin" />
+         </children>
+         <FlowPane.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </FlowPane.margin>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="76.0" layoutY="15.0" prefWidth="300.0" spacing="60.0">
+         <children>
+            <Label />
+            <Label />
+            <Label />
+         </children>
+      </HBox>
+      <FlowPane alignment="BASELINE_LEFT" orientation="VERTICAL" prefWrapLength="0.0">
+         <children>
+            <Slider blockIncrement="1.0" majorTickUnit="10.0" minorTickCount="5" nodeOrientation="LEFT_TO_RIGHT" prefWidth="300.0" showTickLabels="true" showTickMarks="true">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" />
+               </padding>
+            </Slider>
+            <VBox spacing="10.0">
+               <children>
+                  <RadioButton mnemonicParsing="false" text="celsius" />
+                  <RadioButton mnemonicParsing="false" text="fahrenheit" />
+                  <RadioButton mnemonicParsing="false" text="kelvin" />
+               </children>
+               <FlowPane.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </FlowPane.margin>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </VBox>
+         </children>
+      </FlowPane>
+   </children>
+</FlowPane>
