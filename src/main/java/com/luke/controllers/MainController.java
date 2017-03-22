@@ -59,21 +59,26 @@ public class MainController {
 
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				if (selectedRadioButtonText.equals(celsius) || selectedRadioButtonText.equals(null)) {
+				if (selectedRadioButtonText.equals(celsius)) {
 					context = new Context(new CelsiusConventer());
 					convertResults = context.convert(newValue.intValue());
 					setLabelText(convertResults);
-					celsiusLabel.setTextFill(Color.web("#0276a3"));
+                                        setDefaultLabelColors();
+					celsiusLabel.setTextFill(Color.web("red"));
 
 				} else if (selectedRadioButtonText.equalsIgnoreCase(fahrenheit)) {
 					context = new Context(new FahrenheitConventer());
 					convertResults = context.convert(newValue.intValue());
 					setLabelText(convertResults);
+                                        setDefaultLabelColors();
+                                        fahrenheitLabel.setTextFill(Color.web("red"));
 
 				} else {
 					context = new Context(new KelvinConventer());
 					convertResults = context.convert(newValue.intValue());
 					setLabelText(convertResults);
+                                        setDefaultLabelColors();
+                                        kelvinLabel.setTextFill(Color.web("red"));
 				}
 			}
 
@@ -84,7 +89,12 @@ public class MainController {
 	private void getDefaultValue() {
 		RadioButton tempRadioButton = (RadioButton) comboBoxElements.getChildren().get(0);
 		DEFAULT = tempRadioButton.getText();
-	}
+	}private void setDefaultLabelColors() {
+            Color defaultColor = Color.web("black");
+            celsiusLabel.setTextFill(defaultColor);
+            fahrenheitLabel.setTextFill(defaultColor);
+            kelvinLabel.setTextFill(defaultColor);
+        }
 
 	/*
 	 * In initialize() method we give a List<Label> and add all the elements
