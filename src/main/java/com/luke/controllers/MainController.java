@@ -3,24 +3,29 @@ package com.luke.controllers;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.luke.controllers.conventer.CelsiusConventer;
+import com.luke.controllers.conventer.Context;
+import com.luke.controllers.conventer.ConversionResults;
+import com.luke.controllers.conventer.FahrenheitConventer;
+import com.luke.controllers.conventer.KelvinConventer;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class MainController {
 
 	private String selectedRadioButtonText;
 	private static String DEFAULT = null;
+	private static final String celsius = "celsius", fahrenheit = "fahrenheit", kelvin = "kelvin";
+	protected static ConversionResults results = null;
 
 	@FXML // fx:id="kelvinLabel"
 	private Label kelvinLabel; // Value injected by FXMLLoader
@@ -38,6 +43,8 @@ public class MainController {
 	private VBox comboBoxElements; // Value injected by FXMLLoader
 
 	private List<Label> labelTemperatureList;
+	private Context context;
+	private ConversionResults convertResults;
 
 	@FXML
 	public void initialize() {
@@ -52,11 +59,28 @@ public class MainController {
 
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				setLabelText(labelTemperatureList, newValue);
+				if (selectedRadioButtonText.equals(celsius) || selectedRadioButtonText.equals(null)) {
+					context = new Context(new CelsiusConventer());
+					convertResults = context.convert(newValue.intValue());
+					setLabelText(convertResults);
+					celsiusLabel.setTextFill(Color.web("#0276a3"));
+
+				} else if (selectedRadioButtonText.equalsIgnoreCase(fahrenheit)) {
+					context = new Context(new FahrenheitConventer());
+					convertResults = context.convert(newValue.intValue());
+					setLabelText(convertResults);
+
+				} else {
+					context = new Context(new KelvinConventer());
+					convertResults = context.convert(newValue.intValue());
+					setLabelText(convertResults);
+				}
 			}
 
 		});
 	}
+
+	// setting up default selected value as 'celsius'
 	private void getDefaultValue() {
 		RadioButton tempRadioButton = (RadioButton) comboBoxElements.getChildren().get(0);
 		DEFAULT = tempRadioButton.getText();
@@ -68,20 +92,18 @@ public class MainController {
 	 * value to those Label using native method of setText on each.
 	 */
 	// TODO calculate those label according to chosen option
-	private void setLabelText(List<Label> list, Number value) {
-		int tempValue = Math.round(value.floatValue());
-		for (Label l : list) {
-			l.setText(String.valueOf(tempValue));
-			if (selectedRadioButtonText != null) {
-				System.out.println(selectedRadioButtonText);
-			}
-		}
+	private void setLabelText(ConversionResults r) {
+		celsiusLabel.setText(String.valueOf(r.getCelsius()));
+		fahrenheitLabel.setText(String.valueOf(r.getFahrenheit()));
+		kelvinLabel.setText(String.valueOf(r.getKelvin()));
 	}
 
+	// getting text of selected radiobutton
 	@FXML
 	void comboBoxSelected(ActionEvent event) {
 		RadioButton selectedRadioButton = (RadioButton) event.getSource();
 		selectedRadioButtonText = selectedRadioButton.getText();
 	}
+	
 
 }
