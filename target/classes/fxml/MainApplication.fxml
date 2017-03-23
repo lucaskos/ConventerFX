@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.FlowPane?>
 
-<FlowPane alignment="TOP_CENTER" prefHeight="150.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luke.controllers.MainController">
+<FlowPane fx:id="temperaturePane" alignment="TOP_CENTER" prefHeight="150.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luke.controllers.TemperatureController">
    <children>
-      <GridPane fx:id="gridpane" alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT">
+      <GridPane alignment="TOP_CENTER" nodeOrientation="LEFT_TO_RIGHT">
         <columnConstraints>
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -34,7 +34,7 @@
             <Insets />
          </opaqueInsets>
       </GridPane>
-      <FlowPane fx:id="flowpane" alignment="BASELINE_LEFT" orientation="VERTICAL" prefWrapLength="0.0">
+      <FlowPane alignment="BASELINE_LEFT" orientation="VERTICAL" prefWrapLength="0.0">
          <children>
             <Slider fx:id="slider" blockIncrement="1.0" majorTickUnit="10.0" minorTickCount="5" nodeOrientation="LEFT_TO_RIGHT" prefWidth="300.0" showTickLabels="true" showTickMarks="true">
                <cursor>

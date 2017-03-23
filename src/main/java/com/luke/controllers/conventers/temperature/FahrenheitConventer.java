@@ -1,4 +1,4 @@
-package com.luke.controllers.conventer;
+package com.luke.controllers.conventers.temperature;
 
 public class FahrenheitConventer implements TemperatureStrategy {
 
