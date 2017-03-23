@@ -11,19 +11,23 @@ import com.luke.controllers.conventers.temperature.KelvinConventer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 public class TemperatureController {
 
 	private String selectedRadioButtonText;
 	private static String DEFAULT = null;
+
+	// @Fields used to store String values of temperature Strategies
 	private static final String celsius = "celsius", fahrenheit = "fahrenheit", kelvin = "kelvin";
 	protected static ConversionResults results = null;
 
@@ -42,6 +46,9 @@ public class TemperatureController {
 	@FXML // fx:id="comboBoxElements"
 	private VBox comboBoxElements; // Value injected by FXMLLoader
 
+	@FXML
+	private GridPane gridPane;
+
 	private List<Label> labelTemperatureList;
 	private Context context;
 	private ConversionResults convertResults;
@@ -57,28 +64,39 @@ public class TemperatureController {
 		labelTemperatureList.add(fahrenheitLabel);
 		labelTemperatureList.add(kelvinLabel);
 
+		
+		//TODO
+		//remove it below if creation of such method go into vain
+		ArrayList<Label> list = new ArrayList<>();
+		list.add(celsiusLabel);
+		list.add(kelvinLabel);
+		list.add(fahrenheitLabel);
+//TODO
+		//extract those method to be more generic in case there will be more labels in the future
+		//create method that will distinguish between different type of label based on the name or ID
+		//if no just leave it as it is
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				if (selectedRadioButtonText.equals(celsius)) {
+				if (selectedRadioButtonText.equalsIgnoreCase(celsius)) {
 					context = new Context(new CelsiusConventer());
 					convertResults = context.convert(newValue.intValue());
 					setLabelText(convertResults);
-                                        setDefaultLabelColors();
+					setDefaultLabelColors();
 					celsiusLabel.setTextFill(Color.web("red"));
-
 				} else if (selectedRadioButtonText.equalsIgnoreCase(fahrenheit)) {
 					context = new Context(new FahrenheitConventer());
 					convertResults = context.convert(newValue.intValue());
 					setLabelText(convertResults);
-                                        setDefaultLabelColors();
-                                        fahrenheitLabel.setTextFill(Color.web("red"));
+					setDefaultLabelColors();
+					fahrenheitLabel.setTextFill(Color.web("red"));
 
 				} else {
 					context = new Context(new KelvinConventer());
 					convertResults = context.convert(newValue.intValue());
 					setLabelText(convertResults);
-                                        setDefaultLabelColors();
-                                        kelvinLabel.setTextFill(Color.web("red"));
+					setDefaultLabelColors();
+					kelvinLabel.setTextFill(Color.web("red"));
+
 				}
 			}
 
@@ -89,19 +107,21 @@ public class TemperatureController {
 	private void getDefaultValue() {
 		RadioButton tempRadioButton = (RadioButton) comboBoxElements.getChildren().get(0);
 		DEFAULT = tempRadioButton.getText();
-	}private void setDefaultLabelColors() {
-            Color defaultColor = Color.web("black");
-            celsiusLabel.setTextFill(defaultColor);
-            fahrenheitLabel.setTextFill(defaultColor);
-            kelvinLabel.setTextFill(defaultColor);
-        }
+	}
+
+	// default color of Labels is black
+	private void setDefaultLabelColors() {
+		Color defaultColor = Color.web("black");
+		celsiusLabel.setTextFill(defaultColor);
+		fahrenheitLabel.setTextFill(defaultColor);
+		kelvinLabel.setTextFill(defaultColor);
+	}
 
 	/*
 	 * In initialize() method we give a List<Label> and add all the elements
 	 * (including all temperature Labels in 2nd row of gridPane. Then we pass
 	 * value to those Label using native method of setText on each.
 	 */
-	// TODO calculate those label according to chosen option
 	private void setLabelText(ConversionResults r) {
 		celsiusLabel.setText(String.valueOf(r.getCelsius()));
 		fahrenheitLabel.setText(String.valueOf(r.getFahrenheit()));
@@ -114,6 +134,5 @@ public class TemperatureController {
 		RadioButton selectedRadioButton = (RadioButton) event.getSource();
 		selectedRadioButtonText = selectedRadioButton.getText();
 	}
-	
 
 }

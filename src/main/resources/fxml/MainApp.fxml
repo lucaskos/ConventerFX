@@ -5,16 +5,20 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="400.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luke.controllers.MainController">
-  <tabs>
-    <Tab fx:id="temperaturePane" text="Temperature">
-         <content>
-            <fx:include fx:id="temperaturePane" source="MainApplication.fxml" />
-         </content>
-    </Tab>
-    <Tab text="Weight">
-         <content>
-         </content>
-    </Tab>
-  </tabs>
+<TabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity"
+	minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
+	prefWidth="400.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.luke.controllers.MainController">
+	<tabs>
+		<Tab text="Temperature">
+			<content>
+				<fx:include fx:id="temperaturePane" source="TemperatureApplication.fxml" />
+			</content>
+		</Tab>
+		<Tab text="Weight">
+			<content>
+				<fx:include fx:id="weighPane" source="WeightApplication.fxml" />
+			</content>
+		</Tab>
+	</tabs>
 </TabPane>
