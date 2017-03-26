@@ -1,22 +1,25 @@
 package com.luke.controllers;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 
 import com.luke.controllers.conventers.weight.ContextWeigh;
 import com.luke.controllers.conventers.weight.ConversionWeighResults;
 import com.luke.controllers.conventers.weight.KilogramConventer;
-import com.sun.javafx.collections.ChangeHelper;
+import com.luke.controllers.conventers.weight.OunceConventer;
+import com.luke.controllers.conventers.weight.PoundConventer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.FlowPane;
 
 public class WeightController {
@@ -61,7 +64,7 @@ public class WeightController {
 
 	@FXML
 	private Label poundResultLabel;
-	ConversionWeighResults convertionResults;
+	ConversionWeighResults conversionResults;
 	ArrayList<Label> resultsLabel;
 	
 	//TODO extract this to method ?
@@ -83,21 +86,29 @@ public class WeightController {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				value = newValue.intValue();
-				System.out.println(weightOption);
 				if(weightOption.equalsIgnoreCase(KILOGRAM_VALUE)) {
 					context = new ContextWeigh(new KilogramConventer());
-					convertionResults = context.convert(value);
-					
-					
+					conversionResults = context.convert(value);
+					setLabelValues(resultsLabel, conversionResults);
 					
 					//TODO delete syso
-					System.out.println("Value of the slider to kilogram : "+ convertionResults.toString());
+					System.out.println("Value of the slider to kilogram : "+ conversionResults.toString());
 				} else if (weightOption.equalsIgnoreCase(OUNCE_VALUE)) {
-					
+					context = new ContextWeigh(new OunceConventer());
+					conversionResults = context.convert(value);
+					setLabelValues(resultsLabel, conversionResults);
 				} else if(weightOption.equalsIgnoreCase(POUND_VALUE)) {
-					
+					context = new ContextWeigh(new PoundConventer());
+					conversionResults = context.convert(value);
+					setLabelValues(resultsLabel, conversionResults);
 				} else {
 					
+					//TODO test dialog for wrong option
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Wrong Option");
+					alert.setHeaderText(null);
+					alert.setContentText("I have a great message for you!");
+					alert.showAndWait();
 				}
 			}
 		});
@@ -119,7 +130,8 @@ public class WeightController {
 	
 	public void setLabelValues(ArrayList<Label> labelList, ConversionWeighResults rs) {
 		for(int i = 0 ; i < labelList.size(); i++){
-			labelList.get(i).setText(String.valueOf(rs.getResults().get(i)));
+			DecimalFormat formatter = new DecimalFormat("#0.00");
+			labelList.get(i).setText(formatter.format(rs.getResults().get(i)));
 		}
 	}
 	

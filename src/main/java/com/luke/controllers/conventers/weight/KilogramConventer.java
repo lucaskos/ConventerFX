@@ -1,6 +1,6 @@
 package com.luke.controllers.conventers.weight;
 
-public class KilogramConventer implements WeighStrategy {
+public class KilogramConventer implements WeightStrategy  {
 
 	@Override
 	//takes kilogram as a value and returns all 4 value as a object

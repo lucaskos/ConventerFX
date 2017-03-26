@@ -1,9 +1,9 @@
 package com.luke.controllers.conventers.weight;
 
 public class ContextWeigh {
-	private WeighStrategy weightStrategy;
+	private WeightStrategy weightStrategy;
 	
-	public ContextWeigh(WeighStrategy strategy) {
+	public ContextWeigh(WeightStrategy strategy) {
 		this.weightStrategy = strategy;
 	}
 	

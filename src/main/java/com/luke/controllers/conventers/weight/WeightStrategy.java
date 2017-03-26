@@ -1,5 +1,5 @@
 package com.luke.controllers.conventers.weight;
 
-public interface WeighStrategy {
+public interface WeightStrategy {
 	public ConversionWeighResults convert(int value);
 }
