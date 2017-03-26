@@ -7,7 +7,7 @@ public class ContextWeigh {
 		this.weightStrategy = strategy;
 	}
 	
-	public ConversionWeighResults convert(int value) {
+	public ConversionWeighResults convert(Number value) {
 		return this.weightStrategy.convert(value);
 	}
 }

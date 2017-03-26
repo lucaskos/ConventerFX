@@ -4,17 +4,17 @@ import java.util.ArrayList;
 
 public class ConversionWeighResults {
 
-	private int kilogram;
+	private double kilogram;
 	private double pound, ounce, stones;
 
-	public ConversionWeighResults(int kilogram, double pound, double ounce, double stones) {
+	public ConversionWeighResults(double kilogram, double pound, double ounce, double stones) {
 		this.kilogram = kilogram;
 		this.pound = pound;
 		this.ounce = ounce;
 		this.stones = stones;
 	}
 
-	public int getKilogram() {
+	public double getKilogram() {
 		return kilogram;
 	}
 

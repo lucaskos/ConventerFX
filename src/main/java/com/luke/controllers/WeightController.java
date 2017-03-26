@@ -15,11 +15,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.FlowPane;
 
 public class WeightController {
@@ -69,7 +68,7 @@ public class WeightController {
 	
 	//TODO extract this to method ?
 	private String weightOption = KILOGRAM_VALUE;
-	private int value = 0;
+	private Number value = 0;
 	
 	@FXML
 	public void initialize() {
@@ -85,14 +84,11 @@ public class WeightController {
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
 			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
-				value = newValue.intValue();
+				value = newValue;
 				if(weightOption.equalsIgnoreCase(KILOGRAM_VALUE)) {
 					context = new ContextWeigh(new KilogramConventer());
 					conversionResults = context.convert(value);
 					setLabelValues(resultsLabel, conversionResults);
-					
-					//TODO delete syso
-					System.out.println("Value of the slider to kilogram : "+ conversionResults.toString());
 				} else if (weightOption.equalsIgnoreCase(OUNCE_VALUE)) {
 					context = new ContextWeigh(new OunceConventer());
 					conversionResults = context.convert(value);
@@ -102,7 +98,7 @@ public class WeightController {
 					conversionResults = context.convert(value);
 					setLabelValues(resultsLabel, conversionResults);
 				} else {
-					
+					//TODO implement stone conventer
 					//TODO test dialog for wrong option
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Wrong Option");
@@ -123,7 +119,7 @@ public class WeightController {
 		});
 	}
 
-	public void setDefaultLabelValues(ArrayList<Label> label, int value) {
+	public void setDefaultLabelValues(ArrayList<Label> label, Number value) {
 		for(Label l : label) 
 			l.setText(String.valueOf(value));
 	}
@@ -135,8 +131,4 @@ public class WeightController {
 		}
 	}
 	
-	public WeightController() {
-		
-
-	}
 }
