@@ -55,7 +55,6 @@ public class TemperatureController {
 
 	@FXML
 	public void initialize() {
-		System.out.println("initialized");
 		getDefaultValue();
 		selectedRadioButtonText = DEFAULT;
 
