@@ -11,10 +11,8 @@ import com.luke.controllers.conventers.temperature.KelvinConventer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
@@ -52,6 +50,7 @@ public class TemperatureController {
 	private List<Label> labelTemperatureList;
 	private Context context;
 	private ConversionResults convertResults;
+	private String webColor = "#af0000";
 
 	@FXML
 	public void initialize() {
@@ -63,46 +62,41 @@ public class TemperatureController {
 		labelTemperatureList.add(fahrenheitLabel);
 		labelTemperatureList.add(kelvinLabel);
 
-		
-		//TODO
-		//remove it below if creation of such method go into vain
 		ArrayList<Label> list = new ArrayList<>();
 		list.add(celsiusLabel);
 		list.add(kelvinLabel);
 		list.add(fahrenheitLabel);
-//TODO
-		//extract those method to be more generic in case there will be more labels in the future
-		//create method that will distinguish between different type of label based on the name or ID
-		//if no just leave it as it is
+		// TODO
+		// extract those method to be more generic in case there will be more
+		// labels in the future
+		// create method that will distinguish between different type of label
+		// based on the name or ID
+		// if no just leave it as it is
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				if (selectedRadioButtonText.equalsIgnoreCase(celsius)) {
 					context = new Context(new CelsiusConventer());
-					convertResults = context.convert(newValue.intValue());
-					setLabelText(convertResults);
-					setDefaultLabelColors();
-					celsiusLabel.setTextFill(Color.web("red"));
+					presentResults(newValue, celsiusLabel);
 				} else if (selectedRadioButtonText.equalsIgnoreCase(fahrenheit)) {
 					context = new Context(new FahrenheitConventer());
-					convertResults = context.convert(newValue.intValue());
-					setLabelText(convertResults);
-					setDefaultLabelColors();
-					fahrenheitLabel.setTextFill(Color.web("red"));
-
+					presentResults(newValue, fahrenheitLabel);
 				} else {
 					context = new Context(new KelvinConventer());
-					convertResults = context.convert(newValue.intValue());
-					setLabelText(convertResults);
-					setDefaultLabelColors();
-					kelvinLabel.setTextFill(Color.web("red"));
-
+					presentResults(newValue, kelvinLabel);
 				}
+			}
+
+			public void presentResults(Number newValue, Label l) {
+				convertResults = context.convert(newValue.intValue());
+				setLabelText(convertResults);
+				setDefaultLabelColors();
+				l.setTextFill(Color.web(webColor));
 			}
 
 		});
 	}
 
-	// setting up default selected value as 'celsius'
+	// setting up default selected value as String celsius = 'celsius'
 	private void getDefaultValue() {
 		RadioButton tempRadioButton = (RadioButton) comboBoxElements.getChildren().get(0);
 		DEFAULT = tempRadioButton.getText();

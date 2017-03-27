@@ -66,27 +66,29 @@ public class WeightController {
 	private Label poundResultLabel;
 	ConversionWeighResults conversionResults;
 	ArrayList<Label> resultsLabel;
-	
-	//TODO extract this to method ?
+
 	private String weightOption = KILOGRAM_VALUE;
 	private Number value = 0;
-	
+
 	@FXML
 	public void initialize() {
-		
+
 		resultsLabel = new ArrayList<Label>();
 		resultsLabel.add(kilogramResultLabel);
 		resultsLabel.add(poundResultLabel);
 		resultsLabel.add(ounceResultLabel);
 		resultsLabel.add(stonesResultLabel);
-		
+
 		setDefaultLabelValues(resultsLabel, value);
 		System.out.println("weight controller initialized");
+		/*
+		 * Listener for slider to get the values of it and return appropiate
+		 * results
+		 */
 		slider.valueProperty().addListener(new ChangeListener<Number>() {
-			@Override
 			public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
 				value = newValue;
-				if(weightOption.equalsIgnoreCase(KILOGRAM_VALUE)) {
+				if (weightOption.equalsIgnoreCase(KILOGRAM_VALUE)) {
 					context = new ContextWeigh(new KilogramConventer());
 					conversionResults = context.convert(value);
 					setLabelValues(resultsLabel, conversionResults);
@@ -94,46 +96,48 @@ public class WeightController {
 					context = new ContextWeigh(new OunceConventer());
 					conversionResults = context.convert(value);
 					setLabelValues(resultsLabel, conversionResults);
-				} else if(weightOption.equalsIgnoreCase(POUND_VALUE)) {
+				} else if (weightOption.equalsIgnoreCase(POUND_VALUE)) {
 					context = new ContextWeigh(new PoundConventer());
 					conversionResults = context.convert(value);
 					setLabelValues(resultsLabel, conversionResults);
-				} else if(weightOption.equalsIgnoreCase(STONES_VALUE)) {
+				} else if (weightOption.equalsIgnoreCase(STONES_VALUE)) {
 					context = new ContextWeigh(new StoneConventer());
 					conversionResults = context.convert(value);
 					setLabelValues(resultsLabel, conversionResults);
-
 				} else {
-					//TODO test dialog for wrong option
-					Alert alert = new Alert(AlertType.INFORMATION);
-					alert.setTitle("Wrong Option");
-					alert.setHeaderText(null);
-					alert.setContentText("I have a great message for you!");
-					alert.showAndWait();
+					showAlert();
 				}
 			}
+
 		});
 
 		temperatureChoiceBox.setItems(weightValueList);
 		temperatureChoiceBox.getSelectionModel().select(KILOGRAM_VALUE);
 		temperatureChoiceBox.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				weightOption = newValue;
 			}
 		});
 	}
 
-	public void setDefaultLabelValues(ArrayList<Label> label, Number value) {
-		for(Label l : label) 
-			l.setText(String.valueOf(value));
+	public void showAlert() {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Wrong Option");
+		alert.setHeaderText(null);
+		alert.setContentText("Unfortunately you've choosen wrong option for conversion. Please try again!");
+		alert.showAndWait();
 	}
-	
+
+	public void setDefaultLabelValues(ArrayList<Label> label, Number value) {
+		for (Label l : label)
+			l.setText(String.valueOf(value.doubleValue()));
+	}
+
 	public void setLabelValues(ArrayList<Label> labelList, ConversionWeighResults rs) {
-		for(int i = 0 ; i < labelList.size(); i++){
+		for (int i = 0; i < labelList.size(); i++) {
 			DecimalFormat formatter = new DecimalFormat("#0.00");
 			labelList.get(i).setText(formatter.format(rs.getResults().get(i)));
 		}
 	}
-	
+
 }
