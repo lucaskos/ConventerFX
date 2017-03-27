@@ -8,6 +8,7 @@ import com.luke.controllers.conventers.weight.ConversionWeighResults;
 import com.luke.controllers.conventers.weight.KilogramConventer;
 import com.luke.controllers.conventers.weight.OunceConventer;
 import com.luke.controllers.conventers.weight.PoundConventer;
+import com.luke.controllers.conventers.weight.StoneConventer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -97,8 +98,12 @@ public class WeightController {
 					context = new ContextWeigh(new PoundConventer());
 					conversionResults = context.convert(value);
 					setLabelValues(resultsLabel, conversionResults);
+				} else if(weightOption.equalsIgnoreCase(STONES_VALUE)) {
+					context = new ContextWeigh(new StoneConventer());
+					conversionResults = context.convert(value);
+					setLabelValues(resultsLabel, conversionResults);
+
 				} else {
-					//TODO implement stone conventer
 					//TODO test dialog for wrong option
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Wrong Option");
